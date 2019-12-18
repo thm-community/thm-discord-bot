@@ -16,20 +16,19 @@ class Gtfobins(commands.Cog):
             try:
                 data = gtfobins_file[search_term]
                 response = discord.Embed(title="Gtfobins' {} results:-".format(search_term), color=0xcc0000)
-                result = "\n".join(data)
+                result = ["- " + item + "\n" for item in data]
                 response.set_thumbnail(url="https://gtfobins.github.io/assets/logo.png")
                 response.add_field(name="Search_term: ", value=search_term)
                 response.add_field(name="Vulnerabilities: ", value=result)
                 response.add_field(name="URL: ", value="https://gtfobins.github.io/gtfobins/"+search_term)
                 await ctx.send(embed=response)
             except Exception as e:
-                print(e)
                 await ctx.send("{} not found in gtfobins.".format(search_term))
         else:
             try:
                 result = ""
                 for key, value in gtfobins_file.items():
-                    result += key
+                    result += "- " + key
                     result += "\n"
                 response = discord.Embed(title="Gtfobins binaries:-\n", color=0xcc0000)
                 response.set_thumbnail(url="https://gtfobins.github.io/assets/logo.png")
