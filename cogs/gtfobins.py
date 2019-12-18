@@ -16,7 +16,7 @@ class Gtfobins(commands.Cog):
             try:
                 data = gtfobins_file[search_term]
                 response = discord.Embed(title="Gtfobins' {} results:-".format(search_term), color=0xcc0000)
-                result = ["- " + item + "\n" for item in data]
+                result = "".join(["- " + item + "\n" for item in data])
                 response.set_thumbnail(url="https://gtfobins.github.io/assets/logo.png")
                 response.add_field(name="Search_term: ", value=search_term)
                 response.add_field(name="Vulnerabilities: ", value=result)
