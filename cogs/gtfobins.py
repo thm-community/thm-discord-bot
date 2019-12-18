@@ -20,7 +20,7 @@ class Gtfobins(commands.Cog):
                 response.set_thumbnail(url="https://gtfobins.github.io/assets/logo.png")
                 response.add_field(name="Search_term: ", value=search_term)
                 response.add_field(name="Vulnerabilities: ", value=result)
-                response.add_field(name="URL: ", value="https://gtfobins.github.io/"+search_term)
+                response.add_field(name="URL: ", value="https://gtfobins.github.io/gtfobins/"+search_term)
                 await ctx.send(embed=response)
             except Exception as e:
                 print(e)
