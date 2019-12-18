@@ -37,6 +37,7 @@ quotes = [
 def getMoto():
     return quotes[random.randint(0, len(quotes) - 1)]
 
+# Getting infos.
 def getAvatars(username):
     response = requests.get("https://tryhackme.com/api/user/{}".format(username))
     data = response.text

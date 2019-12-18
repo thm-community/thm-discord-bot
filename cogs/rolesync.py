@@ -7,7 +7,7 @@ from discord.ext import commands
 from discord import guild
 from discord.channel import DMChannel
 
-
+# IDs.
 guildF = json.loads(open("config/guild.json", "r").read())
 rolesF = json.loads(open("config/roles.json", "r").read())
 
@@ -16,11 +16,13 @@ rolesID = rolesF["ranks"]
 subID = rolesF["sub"]
 
 
+## Message managment.
 async def deleteCommand(ctx):
         await ctx.send("Updating roles for " + ctx.message.author.mention + "!")
         await ctx.bot.delete_message(ctx.message)
 
-# Role managment
+
+## Role managment.
 def hasRole(member, id):
         for role in member.roles:
                 if id == role.id:
@@ -38,7 +40,8 @@ async def removeSubRole(member):
 async def addRole(member, id):
         await member.add_roles(get(member.guild.roles, id=id))
 
-# Actual command
+
+## Actual command.
 class RoleSync(commands.Cog,name="Verifying/Role Assigning Commands"):
         def __init__(self,bot):
                 self.bot = bot
@@ -70,6 +73,8 @@ class RoleSync(commands.Cog,name="Verifying/Role Assigning Commands"):
                                                 cmdResult = "I'm sorry but I couldn't find the specified token!"
                                         else:
                                                 server = self.bot.get_guild(guildID)
+
+                                                # If server ID is wrong.
                                                 if server == None:
                                                         await ctx.send("An unexpected error has occured. Please contact THM's BOT maintainers.\nERROR: Server not found.")
                                                         return
@@ -77,6 +82,7 @@ class RoleSync(commands.Cog,name="Verifying/Role Assigning Commands"):
                                                 user = ctx.message.author
                                                 member = server.get_member(user.id)
 
+                                                # If user isn't a member or wrong.
                                                 if user == None or member == None:
                                                         await ctx.send("An unexpected error has occured. Please contact THM's BOT maintainers.\nERROR: User not found.")
                                                         return

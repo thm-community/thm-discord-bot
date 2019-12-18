@@ -49,15 +49,12 @@ class Fun(commands.Cog, name="Fun Commands"):
     
     @commands.command()
     async def boop(self, ctx, member: discord.Member=None):
-        if ctx.message.channel.name == "bot-commands":
-                if member.name == "Asphodel": #Yume - Asphodel#8097
-                    print("No boop")
+        if ctx.message.channel.name == "bot-commands" and member is not None:
+                if member.id == 572908911749890053: #Yume - Asphodel#8097 572908911749890053
                     desc = "<@{}>, you can't boop <@{}>!".format(ctx.author.id, member.id)
                     response = discord.Embed(title="!boop", description=desc, color=0xFFFFFF)
                     response.set_author(name="TryHackMe",icon_url="https://tryhackme.com/img/THMlogo.png")
                 else:
-                    print("Boop")
-                    #user = "<@{}>".format(member)
                     desc = "<@{}> was booped by <@{}>!".format(member.id, ctx.author.id)
                     response = discord.Embed(title="!boop", description=desc, color=0xFFFFFF)
                     response.set_author(name="TryHackMe",icon_url="https://tryhackme.com/img/THMlogo.png")

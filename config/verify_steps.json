@@ -1,0 +1,7 @@
+{
+    "steps":[
+        "Go on https://tryhackme.com/profile and find your **Discord Token**.",
+        "DM me using the command !verify <token> using the token you just retrieved.",
+        "You should now be verified on the TryHackMe Discord server!"
+    ]
+}

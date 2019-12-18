@@ -14,14 +14,14 @@ devLeadID = rolesF["devLead"]
 devID = rolesF["dev"]
 
 
-# Role managment
+# Role managment functions.
 def hasRole(member, id):
         for role in member.roles:
                 if id == role.id:
                         return True
         return False
 
-# Actual command
+# Actual COG and command.
 class DevRole(commands.Cog,name="BOT Dev"):
         def __init__(self,bot):
                 self.bot = bot
@@ -31,12 +31,15 @@ class DevRole(commands.Cog,name="BOT Dev"):
 
                 devRole = ctx.guild.get_role(devID)
                 
+                # Check if the user has the requiered role to issue the command. (DEV LEAD)
                 if (hasRole(ctx.author, devLeadID) and not (hasRole(member, devID))):
                         await member.add_roles(devRole)
                         await ctx.send("Welcome on the BOT Dev team, " + member.mention + "!")
                 elif (hasRole(ctx.author, devLeadID) and (hasRole(member, devID))):
                         await member.remove_roles(devRole)
                         await ctx.send(member.mention + " left the BOT Dev team!")
+                else:
+                        await ctx.send("Sorry, " + ctx.author.mention + " but you do not have the permission to do that.")
             
 
 def setup(bot):

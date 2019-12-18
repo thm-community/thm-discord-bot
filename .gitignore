@@ -1,10 +1,15 @@
 #Bot Controller Items
 token.txt
-creds.txt
+twitter_creds.txt
+jira_creds.txt
 *.data
 
 #Local storage
 config/storage.json
+
+#Leaderboard
+images/leaderboard_output.png
+images/temp*
 
 #Debugging Items
 *.7z
