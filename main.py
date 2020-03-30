@@ -17,7 +17,7 @@ start_time = time.time()
 
 # Setting up extentions. (cogs)
 # Disabled: "cogs.wiki" "cogs.fun" "cogs.gtfobins"
-extensions = ["cogs.room", "cogs.help", "cogs.social", "cogs.rank", "cogs.userrank", "cogs.rolesync", "cogs.rules", "cogs.devrole", "cogs.jira", "cogs.vote", "cogs.giveaway"]
+extensions = ["cogs.room", "cogs.help", "cogs.social", "cogs.rank", "cogs.userrank", "cogs.rolesync", "cogs.rules", "cogs.devrole", "cogs.jira", "cogs.vote", "cogs.giveaway", "cogs.docs"]
 
 # Quotes for the welcoming messages.
 quotesF = json.loads(open("config/quotes.json", "r").read())
