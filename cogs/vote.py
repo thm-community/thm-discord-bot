@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord 
 import json
-import time
+import asyncio
 
 from libs.embedmaker import officialEmbed
 
@@ -38,7 +38,7 @@ class Vote(commands.Cog):
         # Check for the user to be admin.
         if not hasRole(ctx.author, adminID):
             botMsg = await ctx.send("You do not have the permission to do that.")
-            time.sleep(5)
+            await asyncio.sleep(5)
             await botMsg.delete()
             return
 
@@ -62,7 +62,7 @@ class Vote(commands.Cog):
         if vDescMsg.content.lower() == "cancel":
             await botMsgCancel.delete()
             confirmDelMsg = await ctx.send("Vote canceled.")
-            time.sleep(5)
+            await asyncio.sleep(5)
             await confirmDelMsg.delete()
             return
 
@@ -85,7 +85,7 @@ class Vote(commands.Cog):
                     await m.delete()
 
                 confirmDelMsg = await ctx.send("Vote canceled.")
-                time.sleep(5)
+                await asyncio.sleep(5)
                 await confirmDelMsg.delete()
                 return
             else:
@@ -113,7 +113,7 @@ class Vote(commands.Cog):
                 await botMsg.delete()
                 await msg.delete()
                 confirmDelMsg = await ctx.send("Vote canceled.")
-                time.sleep(5)
+                await asyncio.sleep(5)
                 await confirmDelMsg.delete()
                 return
 
@@ -123,7 +123,7 @@ class Vote(commands.Cog):
             if len(cacheBotMsg.reactions) != len(vOpt):
                 await msg.delete()
                 errorMsg = await ctx.send("Wrong amount of reactions, please fix it and send DONE.")
-                time.sleep(5)
+                await asyncio.sleep(5)
                 await errorMsg.delete()
             else:
                 isDone = True
@@ -147,7 +147,7 @@ class Vote(commands.Cog):
                 await msg.delete()
                 await timeAsk.delete()
                 confirmDelMsg = await ctx.send("Vote canceled.")
-                time.sleep(5)
+                await asyncio.sleep(5)
                 await confirmDelMsg.delete()
                 return
             
@@ -156,7 +156,7 @@ class Vote(commands.Cog):
                 isDone = True
             except:
                 errorMsg = await ctx.send("Numbers only, please retry.")
-                time.sleep(2)
+                await asyncio.sleep(2)
                 await errorMsg.delete()
                 isDone = False
             finally:
@@ -205,7 +205,7 @@ class Vote(commands.Cog):
 
             # Waits...
             #time.sleep(15)
-            time.sleep(vTimeHour*60*60)
+            await asyncio.sleep(vTimeHour*60*60)
 
             # Sends results.
             try:
