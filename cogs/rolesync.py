@@ -2,7 +2,6 @@ import discord
 import aiohttp
 import asyncio
 import json
-import time
 from discord.utils import get
 from discord.ext import commands
 from discord import guild
