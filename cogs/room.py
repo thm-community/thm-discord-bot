@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, time, asyncio, aiohttp, json
+import discord, random, asyncio, aiohttp, json
 import ast
 
 from libs.embedmaker import officialEmbed
@@ -77,7 +77,7 @@ class Room(commands.Cog):
                 if json_data["success"] == False:
                     botMsg = await ctx.send("Sorry, but the room code ``"+room_code+"`` could not be found.")
 
-                    time.sleep(5)
+                    await asyncio.sleep(5)
                     await botMsg.delete()
                     await ctx.message.delete()
 
@@ -107,7 +107,7 @@ class Room(commands.Cog):
         if not hasRole(ctx.author, adminID):
             botMsg = await ctx.send("You do not have the permission to do that.")
             
-            time.sleep(5)
+            await asyncio.sleep(5)
 
             await botMsg.delete()
             await ctx.message.delete()
@@ -129,7 +129,7 @@ class Room(commands.Cog):
         if not hasRole(ctx.author, adminID):
             botMsg = await ctx.send("You do not have the permission to do that.")
             
-            time.sleep(5)
+            await asyncio.sleep(5)
 
             await botMsg.delete()
             await ctx.message.delete()
