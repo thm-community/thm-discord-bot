@@ -3,7 +3,7 @@ from requests.auth import HTTPBasicAuth
 import discord 
 import requests
 import json
-import time
+import asyncio
 
 from libs.embedmaker import officialEmbed
 
@@ -49,7 +49,7 @@ class Jira(commands.Cog):
         # Check for the user to be admin.
         if not hasRole(ctx.author, adminID):
             botMsg = await ctx.send("You do not have the permission to do that.")
-            time.sleep(5)
+            await asyncio.sleep(5)
             await botMsg.delete()
             return
 
@@ -145,7 +145,7 @@ class Jira(commands.Cog):
 
             # Removes cancel msg.
             botMsg = await ctx.send("You have **cancelled** the issue!")
-            time.sleep(5)
+            asyncio.sleep(5)
             await botMsg.delete()
 
 
