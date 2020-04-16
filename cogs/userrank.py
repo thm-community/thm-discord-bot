@@ -90,9 +90,14 @@ class Userrank(commands.Cog,name="Rank Commands"):
 
     @commands.command(description="Get a THM member's rank.", usage="{username}")
     async def rank(self,ctx,*,user):
+	    if user == None:
+	        return await ctx.send("You must specify a username for this command!")
+
         if sanitize_check(user) == True:
-            await ctx.send("Sorry, the characters you have entered are blacklisted, instead of trying anything here, try some rooms.")
-        else:
+            return await ctx.send("Sorry, the characters you have entered are blacklisted, instead of trying anything here, try some rooms.")
+            
+        async with ctx.channel.typing():
+            message = await ctx.send(f"Fetching {user}'s rank...")
             try:
                 if getRank(user) != 0:
                     quip = getMoto()
@@ -124,9 +129,9 @@ class Userrank(commands.Cog,name="Rank Commands"):
                     response.add_field(name="Username:", value=user, inline=True)
                     response.add_field(name="Rank:", value="**Error: Username Not Found!**", inline=True)
                             
-                await ctx.send(embed=response)
+                await message.edit(content=None, embed=response)
             except:
-                await ctx.send("**An issue has occured.**")
+                await message.edit(content="**An issue has occured.**")
         
 def setup(bot):
 	bot.add_cog(Userrank(bot))
