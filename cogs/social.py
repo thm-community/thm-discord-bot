@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord, random, time, asyncio, requests, json,tweepy
+import discord, random, asyncio, requests, json,tweepy
 from libs.embedmaker import officialEmbed
     
 # Twitter API key.
