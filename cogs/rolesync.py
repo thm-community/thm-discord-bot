@@ -58,7 +58,7 @@ class RoleSync(commands.Cog,name="Verifying/Role Assigning Commands"):
                 if not isinstance(ctx.channel, DMChannel):
                         await ctx.message.delete()
                         msg = await ctx.send("Please send that command to the bot in a DM. This is to stop other people from using using your token :slight_smile:")
-                        time.sleep(15)
+                        await asyncio.sleep(15)
                         await msg.delete()
                         return
 
