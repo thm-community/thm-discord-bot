@@ -1,6 +1,6 @@
 from discord.ext import commands
 import discord 
-import json, time, random
+import json, asyncio, random
 
 from libs.embedmaker import officialEmbed
 
@@ -36,7 +36,7 @@ class Giveaway(commands.Cog):
         # Check for the user to be admin.
         if not hasRole(ctx.author, adminID):
             botMsg = await ctx.send("You do not have the permission to do that.")
-            time.sleep(5)
+            await asyncio.sleep(5)
             await botMsg.delete()
             return
 
@@ -60,7 +60,7 @@ class Giveaway(commands.Cog):
         if gDescMsg.content.lower() == "cancel":
             await botMsgCancel.delete()
             confirmDelMsg = await ctx.send("Giveaway canceled.")
-            time.sleep(5)
+            await asyncio.sleep(5)
             await confirmDelMsg.delete()
             return
 
@@ -78,7 +78,7 @@ class Giveaway(commands.Cog):
                 await botMsg.delete()
                 await msg.delete()
                 confirmDelMsg = await ctx.send("Giveaway canceled.")
-                time.sleep(5)
+                await asyncio.sleep(5)
                 await confirmDelMsg.delete()
                 return
             
@@ -89,7 +89,7 @@ class Giveaway(commands.Cog):
             if len(cacheBotMsg.reactions) != 1:
                 await msg.delete()
                 errorMsg = await ctx.send("Only one reaction allowed, please fix it and send DONE.")
-                time.sleep(5)
+                await asyncio.sleep(5)
                 await errorMsg.delete()
             else:
                 isDone = True
@@ -113,7 +113,7 @@ class Giveaway(commands.Cog):
                 await msg.delete()
                 await timeAsk.delete()
                 confirmDelMsg = await ctx.send("Giveaway canceled.")
-                time.sleep(5)
+                await asyncio.sleep(5)
                 await confirmDelMsg.delete()
                 return
             
@@ -122,7 +122,7 @@ class Giveaway(commands.Cog):
                 isDone = True
             except:
                 errorMsg = await ctx.send("Numbers only, please retry.")
-                time.sleep(2)
+                await asyncio.sleep(2)
                 await errorMsg.delete()
                 isDone = False
             finally:
@@ -167,7 +167,7 @@ class Giveaway(commands.Cog):
             await gEmbed.add_reaction(gReac)
 
             # Waits...
-            time.sleep(15)
+            await asyncio.sleep(15)
             #time.sleep(gTimeHour*60*60)
 
             # Sends results.
