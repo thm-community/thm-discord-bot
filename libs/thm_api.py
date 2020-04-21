@@ -25,3 +25,28 @@ def isSubscribed(username):
             subscribed = "Yes!"
 
     return subscribed
+
+
+# Gets leaderboard data
+def getLeaderboard(page, monthly=False):
+    pages = {1: 5, 2: 10, 3: 15, 4: 20, 5: 25, 6: 30, 7: 35, 8: 40, 9: 45, 10: 50}
+
+    style = "topUsers"
+    if monthly:
+        style = "topUsersMonthly"
+
+    response = requests.get(f"{root_url}/api/leaderboards")
+    data = json.loads(response.text)[style]
+    num = pages[page] - 5
+
+    users = []
+
+    for e, i in enumerate(data[num:pages[page]]):
+        users.append({
+            'username': i["username"],
+            'avatar': i["avatar"],
+            'points': i["points"],
+            'monthlyPoints': i["monthlyPoints"]
+        })
+
+    return users

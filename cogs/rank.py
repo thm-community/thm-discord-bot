@@ -6,6 +6,8 @@ from io import BytesIO
 import json
 from discord.ext import commands
 
+import libs.thm_api as thm
+
 import random
 
 # Fonts and color.
@@ -17,52 +19,6 @@ gray = (52,60,66)
 green = (136,204,20)
 white = (255, 255, 255)
 
-apiURL = "https://tryhackme.com/api/leaderboards"
-pages = {1:5,2:10,3:15,4:20,5:25,6:30,7:35,8:40,9:45,10:50}
-
-def getUsernames(page, style):
-
-    pages = {1:5,2:10,3:15,4:20,5:25,6:30,7:35,8:40,9:45,10:50}
-    response = requests.get("https://tryhackme.com/api/leaderboards")
-    data = response.text
-    data = json.loads(data)[style]
-    num = pages[page]-5
-    r_num = num+1
-    usernames = []
-    for e,i in enumerate(data[num:pages[page]]):
-        usernames.append(i["username"])
-    return usernames
-
-def getAvatars(page, style):
-
-    pages = {1:5,2:10,3:15,4:20,5:25,6:30,7:35,8:40,9:45,10:50}
-    response = requests.get("https://tryhackme.com/api/leaderboards")
-    data = response.text
-    data = json.loads(data)[style]
-    num = pages[page]-5
-    r_num = num+1
-    avatars = []
-    for e,i in enumerate(data[num:pages[page]]):
-        avatars.append(i["avatar"])
-    return avatars
-
-def getPoints(page, style):
-
-    pages = {1:5,2:10,3:15,4:20,5:25,6:30,7:35,8:40,9:45,10:50}
-    response = requests.get("https://tryhackme.com/api/leaderboards")
-    data = response.text
-    data = json.loads(data)[style]
-    num = pages[page]-5
-    r_num = num+1
-    points = []
-    pointsType = 0
-    if style == "topUsersMonthly":
-        pointsType = "monthlyPoints"
-    else:
-        pointsType = "points"
-    for e,i in enumerate(data[num:pages[page]]):
-        points.append(i[pointsType])
-    return points
 
 '''
 def image_gen(page):
@@ -139,9 +95,7 @@ class Rank(commands.Cog,name="Leaderboard Commands"):
                 mask_draw.ellipse((0, 0) + size, fill=255)
 
                 # Retrieving the users, points and avatar.
-                avatars = getAvatars(page, "topUsers")
-                usernames = getUsernames(page, "topUsers")
-                points = getPoints(page, "topUsers")
+                users = thm.getLeaderboard(page, False)
 
                 base = 150
                 index = 0
@@ -149,20 +103,20 @@ class Rank(commands.Cog,name="Leaderboard Commands"):
                 edge = 975
 
                 #Adding each user.
-                for x in usernames:
-                        response = requests.get(avatars[index])
-                        
+                for user in users:
+                        res = requests.get(user['avatar'])
+
                         # Saving temp image, then adding it to the rest.
-                        temp_img = Image.open(BytesIO(response.content))
+                        temp_img = Image.open(BytesIO(res.content))
                         temp_img.save('images/temp{}.png'.format(index))
                         output = ImageOps.fit(temp_img, mask.size, centering=(0.5, 0.5))
                         img.paste(output, (83, base), mask)
 
                         # Adding the texts.
-                        d.text((222, base+32), "{}".format(usernames[index]), font=font2, fill=white)
+                        d.text((222, base+32), "{}".format(user['username']), font=font2, fill=white)
                         d.text((8, base+32), "{}.".format(index+1+(page-1)*5), font=font2, fill=white)
 
-                        d.text((970-(len(str(points[index]))*25), base+32), str(points[index]), font=font2, fill=green)
+                        d.text((970-(len(str(user['points']))*25), base+32), str(user['points']), font=font2, fill=green)
                         base += 160
                         pos = (8, base)
                         index += 1
@@ -171,7 +125,7 @@ class Rank(commands.Cog,name="Leaderboard Commands"):
                 large_img = img.resize((img.size[0]*4, img.size[1]*4))
                 large_img.save('images/leaderboard_output.png')
                 await ctx.send(file=discord.File('images/leaderboard_output.png'))
-            
+
 
         @commands.command(description="Prints this month's leaderboard.")
         async def monthly(self,ctx,*,page: int=1):
@@ -204,9 +158,7 @@ class Rank(commands.Cog,name="Leaderboard Commands"):
                 mask_draw.ellipse((0, 0) + size, fill=255)
 
                 # Retrieving the users, points and avatar.
-                avatars = getAvatars(page, "topUsersMonthly")
-                usernames = getUsernames(page, "topUsersMonthly")
-                points = getPoints(page, "topUsersMonthly")
+                users = thm.getLeaderboard(page, True)
 
                 base = 150
                 index = 0
@@ -214,20 +166,20 @@ class Rank(commands.Cog,name="Leaderboard Commands"):
                 edge = 975
 
                 #Adding each user.
-                for x in usernames:
-                        response = requests.get(avatars[index])
-                        
+                for user in users:
+                        res = requests.get(user['avatar'])
+
                         # Saving temp image, then adding it to the rest.
-                        temp_img = Image.open(BytesIO(response.content))
+                        temp_img = Image.open(BytesIO(res.content))
                         temp_img.save('images/temp{}.png'.format(index))
                         output = ImageOps.fit(temp_img, mask.size, centering=(0.5, 0.5))
                         img.paste(output, (83, base), mask)
 
                         # Adding the texts.
-                        d.text((222, base+32), "{}".format(usernames[index]), font=font2, fill=white)
+                        d.text((222, base+32), "{}".format(user['username']), font=font2, fill=white)
                         d.text((8, base+32), "{}.".format(index+1+(page-1)*5), font=font2, fill=white)
 
-                        d.text((970-(len(str(points[index]))*25), base+32), str(points[index]), font=font2, fill=green)
+                        d.text((970-(len(str(user['monthlyPoints']))*25), base+32), str(user['monthlyPoints']), font=font2, fill=green)
                         base += 160
                         pos = (8, base)
                         index += 1
@@ -236,10 +188,9 @@ class Rank(commands.Cog,name="Leaderboard Commands"):
                 large_img = img.resize((img.size[0]*4, img.size[1]*4))
                 large_img.save('images/leaderboard_output.png')
                 await ctx.send(file=discord.File('images/leaderboard_output.png'))
-            
+
 
 def setup(bot):
 	bot.add_cog(Rank(bot))
-				
 
-        
+
