@@ -8,6 +8,7 @@ from requests.exceptions import HTTPError
 import random
 
 from libs.embedmaker import officialEmbed
+import libs.thm_api as thm
 
 quotes = [
     "C4n y0u pwn th4 m4chin3?",
@@ -39,42 +40,6 @@ quotes = [
 def getMoto():
     return quotes[random.randint(0, len(quotes) - 1)]
 
-# Getting infos.
-def getAvatars(username):
-    response = requests.get("https://tryhackme.com/api/user/{}".format(username))
-    data = response.text
-    data = json.loads(data)
-    return data['avatar']
-    
-def getPoints(username):
-    response = requests.get("https://tryhackme.com/api/user/{}".format(username))
-    data = response.text
-    data = json.loads(data)
-    return data['points']
-
-def getRank(username):
-    response = requests.get("https://tryhackme.com/api/user/{}".format(username))
-    data = response.text
-    data = json.loads(data)
-    return data['userRank']
-
-
-def getSubStatus(username):
-    url = "https://tryhackme.com/p/{}".format(username)
-    check = "No!"
-    try:
-        response = requests.get(url)
-    except HTTPError as http_err:
-        print(f'HTTP error occurred: {http_err}')
-    except Exception as err:
-        print(f'Other error occurred: {err}')
-    else:
-        #print(response.text)
-        if "<span>Subscribed</span>" in response.text:
-            check = "Yes!"
-        else:
-            check = "No!"
-    return check
 
 def sanitize_check(data):
     chars = ["/",";","-",">","<",":","`","'\"","|"]
@@ -94,22 +59,20 @@ class Userrank(commands.Cog,name="Rank Commands"):
             await ctx.send("Sorry, the characters you have entered are blacklisted, instead of trying anything here, try some rooms.")
         else:
             try:
-                if getRank(user) != 0:
+                user_data = thm.getUserData(user)
+
+                if user_data['userRank'] != 0:
                     quip = getMoto()
                     quip = "*{}*".format(quip)
-                    
-                    userImg = getAvatars(user)
-                    Points = getPoints(user)
-                    rank = getRank(user)
 
                     response = officialEmbed("!rank", quip, 0x148f77)
                     
-                    response.set_thumbnail(url=userImg)
-                    response.add_field(name="Username:", value=user, inline=True)
-                    response.add_field(name="Rank:", value= rank, inline=True)
-                    response.add_field(name="Points:", value=Points, inline=True)
+                    response.set_thumbnail(url=user_data['avatar'])
+                    response.add_field(name="Username:", value=user_data['avatar'],   inline=True)
+                    response.add_field(name="Rank:",     value=user_data['userRank'],   inline=True)
+                    response.add_field(name="Points:",   value=user_data['points'], inline=True)
                     
-                    sub = getSubStatus(user)
+                    sub = thm.isSubscribed(user)
                     
                     response.add_field(name="Subscribed?", value=sub, inline=True)
                 else:
