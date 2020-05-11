@@ -20,6 +20,7 @@ TryHackMe Python Discord Bot
 - Yume
 - Dan @SherlockSec
 - Horshark
+- 5nake.exe
 
 ***Commands:***
 
@@ -45,7 +46,7 @@ TryHackMe Python Discord Bot
 - Rules Commands
   - rules | Sends the rules.
 - Utility
-  - wiki {query} | Search Wikipedia for a query.
+  - exploit [-Title][-CVE][-Type][-Platform][-Port][-Content][-Author][-Tag][-Help] {Query} | Searches exploit-db for exploits.
 - Fun Commands
   - skidy | Sends Skidy's emote.
   - ashu | Send Ashu's emote.
