@@ -20,6 +20,7 @@ id_announcements = config.get_config("channels")["announcements"]
 roles = config.get_config("roles")
 id_admin = roles["admin"]
 id_mod = roles["mod"]
+s_no_perm = config.get_string("commands")["no_perm"]
 # Persistence File.
 file_persistence = config.get_config("persistence")["giveaway"]
 

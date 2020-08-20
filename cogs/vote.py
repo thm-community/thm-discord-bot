@@ -23,6 +23,7 @@ s_vote = config.get_string("vote")
 
 # Channel & role ID.
 id_announcements = config.get_config("channels")["announcements"]
+s_no_perm = config.get_string("commands")["no_perm"]
 roles = config.get_config("roles")
 id_admin = roles["admin"]
 id_mod = roles["mod"]
