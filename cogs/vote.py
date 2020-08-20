@@ -23,8 +23,9 @@ s_vote = config.get_string("vote")
 
 # Channel & role ID.
 id_announcements = config.get_config("channels")["announcements"]
-id_admin = config.get_config("roles")["admin"]
-
+roles = config.get_config("roles")
+id_admin = roles["admin"]
+id_mod = roles["mod"]
 # Persistence File.
 file_persistence = config.get_config("persistence")["vote"]
 
