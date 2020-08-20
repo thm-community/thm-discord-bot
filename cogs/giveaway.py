@@ -17,8 +17,9 @@ from libs.utils import has_role
 
 # Channel and role ID.
 id_announcements = config.get_config("channels")["announcements"]
-id_admin = config.get_config("roles")["admin"]
-
+roles = config.get_config("roles")
+id_admin = roles["admin"]
+id_mod = roles["mod"]
 # Persistence File.
 file_persistence = config.get_config("persistence")["giveaway"]
 

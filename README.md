@@ -36,6 +36,8 @@ TryHackMe Python Discord Bot
   - TryHackMe API call optimizations, leaderboard generation optimizations
 - TuxTheXplorer
   - Cooctus
+- Emma
+  - Fixing BAC
 
 
 ***Commands:***
