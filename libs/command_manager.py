@@ -96,7 +96,8 @@ def check(roles="",
                 # Errors out if channel is not in the channels whitelist
                 except commands.CommandInvokeError as e:
                     # TODO: log exception to debug
-                    await error_response(ctx, "channel_not_allowed")
+                    await error_response(ctx, "channel_not_allowed",
+                                         delete_ctx=True)
                     return False
 
             # 3. Checking if the message author has a role in the list of whitelisted roles.
@@ -106,7 +107,8 @@ def check(roles="",
                 # Error out if the user does not have any role in the whitelisted roles.
                 except commands.MissingAnyRole as e:
                     # TODO: log exception to debug
-                    await error_response(ctx, "no_perm")
+                    await error_response(ctx, "no_perm",
+                                         delete_ctx=True)
                     return False
 
             # 4. If all checks succeeded, then executes the original command.
