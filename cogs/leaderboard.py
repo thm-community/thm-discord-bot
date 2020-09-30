@@ -12,6 +12,7 @@ Other Functionality:
 
 import asyncio
 import datetime
+import typing
 import io
 import json
 import random
@@ -68,17 +69,18 @@ class Leaderboard(commands.Cog, name="Leaderboard Commands"):
     def __init__(self, bot):
         self.bot = bot
 
-    async def generate_leaderboard(self, channel, page: int = 1, monthly: bool = False):
+    async def generate_leaderboard(self, channel, page: int = 1, monthly: bool = False, country: str = None):
         """Generates and sends a leaderboard image based on the parameters"""
 
         # Getting the leaderboard data (in future will also handle other args like countries)
-        leaderboard_data = get_leaderboard_data(monthly)
+        leaderboard_data = get_leaderboard_data(monthly=monthly, country=country)
         available_pages = ceil(len(leaderboard_data) / 5)
 
         # Page count check
-        if page > available_pages or page < 1:
-            await channel.send(s_leader['invalid_page'].format(available_pages))
-            return
+        if available_pages == 0:
+            return await channel.send(s_leader['invalid_country'])
+        elif page > available_pages or page < 1:
+            return await channel.send(s_leader['invalid_page'].format(available_pages))
 
         # Extracting specific users
         data = leaderboard_data[(page * 5) - 5:(page * 5)]
@@ -175,19 +177,45 @@ class Leaderboard(commands.Cog, name="Leaderboard Commands"):
 
         await asyncio.sleep(config.get_config("sleep_time")["monthly_leaderboard"])
 
-    @commands.command(description=s_leader["help_desc"], usage="[page]")
-    async def leaderboard(self, ctx, *, page: int = 1):
+    @commands.command(description=s_leader["help_desc"], usage="[page] / [country [page]]")
+    async def leaderboard(self, ctx, *args):
+        page = 1
+        country = None
+
+        if len(args) > 0:
+            try:
+                page = int(args[0])
+            except:
+                country = args[0]
+        if len(args) > 1:
+            try:
+                page = int(args[1])
+            except:
+                pass
 
         # The bot will appear as typing while executing the command.
         async with ctx.channel.typing():
-            await self.generate_leaderboard(ctx.channel, page, monthly=False)
+            await self.generate_leaderboard(ctx.channel, page, monthly=False, country=country)
 
-    @commands.command(description=s_monthly["help_desc"], usage="[page]")
-    async def monthly(self, ctx, *, page: int = 1):
+    @commands.command(description=s_monthly["help_desc"], usage="[page] / [country [page]]")
+    async def monthly(self, ctx, *args):
+        page = 1
+        country = None
+
+        if len(args) > 0:
+            try:
+                page = int(args[0])
+            except:
+                country = args[0]
+        if len(args) > 1:
+            try:
+                page = int(args[1])
+            except:
+                pass
 
         # The bot will appear as typing while executing the command.
         async with ctx.channel.typing():
-            await self.generate_leaderboard(ctx.channel, page, monthly=True)
+            await self.generate_leaderboard(ctx.channel, page, monthly=True, country=country)
 
     # Starts the monthly leaderboard announcement.
     @commands.Cog.listener()
