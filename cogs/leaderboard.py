@@ -178,40 +178,26 @@ class Leaderboard(commands.Cog, name="Leaderboard Commands"):
         await asyncio.sleep(config.get_config("sleep_time")["monthly_leaderboard"])
 
     @commands.command(description=s_leader["help_desc"], usage="[page] / [country [page]]")
-    async def leaderboard(self, ctx, *args):
-        page = 1
-        country = None
-
-        if len(args) > 0:
-            try:
-                page = int(args[0])
-            except:
-                country = args[0]
-        if len(args) > 1:
-            try:
-                page = int(args[1])
-            except:
-                pass
+    async def leaderboard(self, ctx, first_arg: typing.Optional[typing.Union[int, str]] = 1, second_arg: typing.Optional[int] = None):
+        if type(first_arg) is int:
+            page = first_arg
+        else:
+            country = first_arg
+            if second_arg is not None:
+                page = second_arg
 
         # The bot will appear as typing while executing the command.
         async with ctx.channel.typing():
             await self.generate_leaderboard(ctx.channel, page, monthly=False, country=country)
 
     @commands.command(description=s_monthly["help_desc"], usage="[page] / [country [page]]")
-    async def monthly(self, ctx, *args):
-        page = 1
-        country = None
-
-        if len(args) > 0:
-            try:
-                page = int(args[0])
-            except:
-                country = args[0]
-        if len(args) > 1:
-            try:
-                page = int(args[1])
-            except:
-                pass
+    async def monthly(self, ctx, first_arg: typing.Optional[typing.Union[int, str]] = 1, second_arg: typing.Optional[int] = None):
+        if type(first_arg) is int:
+            page = first_arg
+        else:
+            country = first_arg
+            if second_arg is not None:
+                page = second_arg
 
         # The bot will appear as typing while executing the command.
         async with ctx.channel.typing():
