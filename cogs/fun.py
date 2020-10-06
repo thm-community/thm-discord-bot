@@ -52,9 +52,9 @@ class Fun(commands.Cog, name="Fun Commands"):
                                  author_img="https://i.imgur.com/jZ908d1.png", footer="")
         await ctx.send(embed=response)
 
-    ########################
-    ### HONK, BOOP, NOOT ###
-    ########################
+    ###################################
+    ### HONK, BOOP, NOOT, NOOT HONK ###
+    ###################################
 
     @commands.command(description="HOOONK!")
     async def honk(self, ctx):
@@ -77,7 +77,12 @@ class Fun(commands.Cog, name="Fun Commands"):
         response.set_image(url="https://media1.tenor.com/images/3be64f537ae5dc421d7a8580c1fcde7c/tenor.gif?itemid=15674396")
 
         await ctx.send(embed=response)
-
+    @commands.command(description="NOOT HONK!")
+    async def noot honk(self,ctx):
+        response = officialEmbed("NOOT HONK", color=0x0000ff)
+        response.set_image(url="https://cdn.discordapp.com/attachments/680459914828972076/762989760436109344/441707-201576166526v.png")
+        
+        await ctx.send(embed=response)
     ###############
     ### COOCTUS ###
     ###############
