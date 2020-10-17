@@ -93,6 +93,7 @@ shibe | Sends a shibe picture.
 spaniel | Sends a spaniel picture.
 xkcd | Send a random XKCD comic.
 cooctus | Sends a cooctus clan member.
+noot honk | Sends a noot honk picture.
 
 > Help
 staff | Displays all staff commands.
