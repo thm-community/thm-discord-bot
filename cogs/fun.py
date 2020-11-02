@@ -112,11 +112,11 @@ class Fun(commands.Cog, name="Fun Commands"):
         await ctx.send(embed=response)
 
     @staticmethod
-        def _get_dog_image(breed):
+    def _get_dog_image(breed):
         r = requests.get(f"https://dog.ceo/api/breed/{breed}/images/random") # spaniel, shiba
         return json.loads(r.text)["message"]
         
-        def _get_ollie_image:
+    def _get_ollie_image:
         r = requests.get(f"http://ollie.muirlandoracle.co.uk") # ollie
         return json.loads(r.text)["message"]
 
