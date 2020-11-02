@@ -105,18 +105,21 @@ class Fun(commands.Cog, name="Fun Commands"):
         response.set_image(url=self._get_dog_image("spaniel"))
         await ctx.send(embed=response)
         
-    @commands.command(description="Sends a Ollie picture.")
-    async def ollie(self, ctx):
-        response = officialEmbed("Ollie", color=0xff4500, footer="Ollie Unix Montgomery")
-        response.set_image(url=_get_ollie_image)
-        await ctx.send(embed=response)
-
     @staticmethod
     def _get_dog_image(breed):
         r = requests.get(f"https://dog.ceo/api/breed/{breed}/images/random") # spaniel, shiba
         return json.loads(r.text)["message"]
-        
-    def _get_ollie_image:
+    
+     ########################
+     ###     Ollie Bot    ###
+     ########################
+    async def ollie(self, ctx):
+        response = officialEmbed("Ollie", color=0xff4500, footer="Ollie Unix Montgomery")
+        response.set_image(url=self._get_ollie_image())
+        await ctx.send(embed=response)
+
+@staticmethod
+    def _get_ollie_image():
         r = requests.get(f"http://ollie.muirlandoracle.co.uk") # ollie
         return json.loads(r.text)["message"]
 
