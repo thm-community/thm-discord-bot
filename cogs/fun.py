@@ -113,6 +113,7 @@ class Fun(commands.Cog, name="Fun Commands"):
      ########################
      ###     Ollie Bot    ###
      ########################
+    @commands.command(description="Sends a Ollie picture.")
     async def ollie(self, ctx):
         response = officialEmbed("Ollie", color=0xff4500, footer="Ollie Unix Montgomery")
         response.set_image(url=self._get_ollie_image())
