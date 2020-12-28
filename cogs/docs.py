@@ -86,6 +86,12 @@ s_free_path_url = s_free_path["url"]
 s_free_path_title = s_free_path["title"]
 s_free_path_help_desc = s_free_path["help_desc"]
 
+# Free Path blog post
+s_bug_bounty = s_docs["bug_bounty"]
+s_bug_bounty_url = s_bug_bounty["url"]
+s_bug_bounty_title = s_bug_bounty["title"]
+s_bug_bounty_help_desc = s_bug_bounty["help_desc"]
+
 #############
 # Functions #
 #############
@@ -149,6 +155,10 @@ class Docs(commands.Cog):
 
         elif topic == "free-path":
             response = getEmbedDocs(s_free_path_title, s_free_path_url, c_docs_picture, c_docs_color)
+            await ctx.send(embed=response)
+
+        elif topic == "bug-bounty":
+            response = getEmbedDocs(s_bug_bounty_title, s_bug_bounty_url, c_docs_picture, c_docs_color)
             await ctx.send(embed=response)
 
         # If anything other then the arguments are provided, say that the topic provided does not exist
