@@ -112,7 +112,8 @@
             "help_desc":"Prints the leaderboard.",
             "generating":"Generating global leaderboard...",
             "footer":"Made with love by the TryHackMe Discord Bot",
-            "invalid_page": "This page doesn't exist. Available pages: {}"
+            "invalid_page": "This page doesn't exist. Available pages: {}",
+            "invalid_country": "This country doesn't return any results."
         },
         "monthly":{
             "help_desc":"Prints this month's leaderboard.",

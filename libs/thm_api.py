@@ -53,9 +53,14 @@ def get_sub_status(username):
     return check
 
 
-def get_leaderboard_data(monthly: bool = False):
+def get_leaderboard_data(**kwargs):
     """Fetches leaderboard data (all-time/monthly)"""
-    query = '?type=monthly' if monthly else ''
+    if len(kwargs) > 0:
+        query = "?"
+        for key, val in kwargs.items():
+            if val is None:
+                continue
+            query += f'{key}={str(val).lower()}&'
 
     response = requests.get(c_api_leaderboard + query)
     data = response.text
