@@ -89,6 +89,12 @@ async def announce_room(channel, json_data, code=None):
 
     # Send messages.
     await channel.send(s_room["newroom"].format(url, announceRole.mention), embed=embed)
+
+    roomCategory = discord.utils.get(channel.guild.categories, name="Recent Releases Help")
+
+    # Create new room channel.
+    roomChannel = await channel.guild.create_text_channel(json_data["title"], category=roomCategory)
+    await roomChannel.edit(topic=url)
  
     # Updates local file.
     with open(c_room_data, "w") as file:

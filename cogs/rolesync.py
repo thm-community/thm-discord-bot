@@ -12,6 +12,7 @@ from discord.utils import get
 import libs.config as config
 import libs.database as database
 from libs.utils import api_fetch, has_role, add_role
+from libs.embedmaker import officialEmbed
 
 ### Hello, this is Horshark. 
 ### Before you all @ me, I know. This is disgusting code.
@@ -201,6 +202,17 @@ class RoleSync(commands.Cog, name="Verifying/Role Assigning Commands"):
 
                 if len(user_tokens) > 0 and not user_tokens[0][1] == input_token:
                     cmdResult = s_verify["already_verified"]
+                    
+                    channel = discord.utils.get(guild.text_channels, name="staff_lounge")
+                    embed = officialEmbed("Alert! Re-verification detected!")
+                    
+                    timestamp = datetime.now()
+                    embed.add_field(name="Username: ", value="{}".format(ctx.author), inline=False)
+                    embed.add_field(name="User ID:", value=' '.join(ctx.author.id), inline=False)
+                    embed.add_field(name="Timestamp:", value=timestamp, inline=False)
+                    
+                    await channel.send(embed=embed)
+
 
                     await ctx.send(cmdResult)
                     return    
